@@ -18,14 +18,15 @@ namespace BluetoothLEExplorer.Services.GattUuidsService
         /// <returns>Name of the UUID</returns>
         public static string ConvertUuidToName(Guid uuid)
         {
-            GattNativeUuid name;
-            if (Enum.TryParse(ConvertUuidToShortId(uuid).ToString(), out name) == true)
+            UInt16 s = ConvertUuidToShortId(uuid);
+            if (Enum.IsDefined(typeof(GattNativeUuid), s))
             {
-                return name.ToString();
+                GattNativeUuid name = (GattNativeUuid)Enum.Parse(typeof(GattNativeUuid), s.ToString());
+                return s.ToString("X4") + " " + name.ToString();
             }
             else
             {
-                return uuid.ToString();
+                return s.ToString("X4");
             }
         }
 
@@ -115,6 +116,7 @@ namespace BluetoothLEExplorer.Services.GattUuidsService
         BootKeyboardInputReport = 0x2A22,
         BootKeyboardOutputReport = 0x2A32,
         BootMouseInputReport = 0x2A33,
+        CentralAddressResolution = 0x2AA6,
         CSCFeature = 0x2A5C,
         CSCMeasurement = 0x2A5B,
         CurrentTime = 0x2A2B,
