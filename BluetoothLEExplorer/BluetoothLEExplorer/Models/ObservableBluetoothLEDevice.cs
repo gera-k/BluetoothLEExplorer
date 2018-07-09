@@ -558,6 +558,22 @@ namespace BluetoothLEExplorer.Models
             return ret;
         }
 
+        public void Disconnect()
+        {
+            if (BluetoothLEDevice != null && IsConnected)
+            {
+                foreach (var serv in Services)
+                {
+                    serv.Service.Dispose();
+                }
+                Services.Clear();
+                BluetoothLEDevice.Dispose();
+                BluetoothLEDevice = null;
+                IsConnected = false;
+                ServiceCount = 0;
+            }
+        }
+
         public async Task<bool> DoInAppPairing()
         {
             Debug.WriteLine("Trying in app pairing");
@@ -607,7 +623,7 @@ namespace BluetoothLEExplorer.Models
                 () =>
             {
                 IsPaired = DeviceInfo.Pairing.IsPaired;
-                IsConnected = BluetoothLEDevice.ConnectionStatus == BluetoothConnectionStatus.Connected;
+                IsConnected = BluetoothLEDevice == null ? false : BluetoothLEDevice.ConnectionStatus == BluetoothConnectionStatus.Connected;
                 UpdateSecureConnectionStatus();
             });
         }

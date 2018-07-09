@@ -184,6 +184,7 @@
                         <Grid Height="200" Width="150" Padding="5" Holding="Grid_Holding" RightTapped="Grid_RightTapped" Background="{ThemeResource CustomColor}">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
+                                    <MenuFlyoutItem Text="Disconnect" Click="{x:Bind Disconnect}" />
                                     <MenuFlyoutItem Text="Pair" Click="{x:Bind DoInAppPairing}" />
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>
